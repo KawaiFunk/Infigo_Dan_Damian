@@ -33,6 +33,10 @@ namespace CMSPlus.Domain.Migrations
                     b.Property<DateTime?>("CreatedOnUtc")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

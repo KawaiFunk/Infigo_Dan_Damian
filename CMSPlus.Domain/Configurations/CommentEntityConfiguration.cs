@@ -14,6 +14,7 @@ namespace CMSPlus.Domain.Configurations
         public void Configure(EntityTypeBuilder<CommentEntity> builder)
         {
             builder.ToTable("Comments");
+            builder.Property(x => x.FullName).IsRequired();
             builder.Property(x => x.Text).IsRequired();
             builder.HasOne(x => x.Topic)
                 .WithMany(x => x.Comments)

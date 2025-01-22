@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CMSPlus.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250122213507_AddCommentTable")]
+    [Migration("20250122214756_AddCommentTable")]
     partial class AddCommentTable
     {
         /// <inheritdoc />
@@ -35,6 +35,10 @@ namespace CMSPlus.Domain.Migrations
 
                     b.Property<DateTime?>("CreatedOnUtc")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Text")
                         .IsRequired()
