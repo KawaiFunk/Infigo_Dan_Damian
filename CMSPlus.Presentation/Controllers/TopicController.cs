@@ -5,6 +5,8 @@ using CMSPlus.Domain.Models.TopicModels;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using CMSPlus.Domain.Models.CommentModels;
+using CMSPlus.Services.Services;
 
 namespace CMSPlus.Presentation.Controllers;
 
@@ -14,13 +16,15 @@ public class TopicController : Controller
     private readonly IMapper _mapper;
     private readonly IValidator<TopicEditModel> _editModelValidator;
     private readonly IValidator<TopicCreateModel> _createModelValidator;
+    private readonly ICommentService _commentService;
 
-    public TopicController(ITopicService topicService,IMapper mapper, IValidator<TopicEditModel> editModelValidator, IValidator<TopicCreateModel> createModelValidator)
+    public TopicController(ITopicService topicService,IMapper mapper, IValidator<TopicEditModel> editModelValidator, IValidator<TopicCreateModel> createModelValidator, ICommentService commentService)
     {
         _topicService = topicService;
         _mapper = mapper;
         _editModelValidator = editModelValidator;
         _createModelValidator = createModelValidator;
+        _commentService = commentService;
     }
     
     public async Task<IActionResult> Index()
@@ -98,6 +102,7 @@ public class TopicController : Controller
         return RedirectToAction("Index");
     }
 
+    [HttpGet]
     public async Task<IActionResult> Details(string systemName)
     {
         var topic = await _topicService.GetBySystemName(systemName);
@@ -106,6 +111,7 @@ public class TopicController : Controller
             throw new ArgumentException($"Item with system name: {systemName} wasn't found!");
         }
         var topicDto = _mapper.Map<TopicEntity, TopicDetailsModel>(topic);
+        
         return View(topicDto);
     }
 }
